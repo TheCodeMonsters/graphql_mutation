@@ -55,12 +55,12 @@ class _AddUserState extends State<AddUser> {
             ),
           );
         },
-        update: (Cache cache, QueryResult result) {
-          return cache;
-        },
-        onCompleted: (dynamic resultdata) {
-          Navigator.pop(context);
-        },
+        // update: (Cache cache, QueryResult result) {
+        //   return cache;
+        // },
+        // onCompleted: (dynamic resultdata) {
+        //   Navigator.pop(context);
+        // },
       ),
     );
   }

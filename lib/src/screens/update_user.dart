@@ -83,20 +83,20 @@ class _UpdateUserState extends State<UpdateUser> {
                 ),
               );
             },
-            update: (Cache cacheDelete, QueryResult result) {
-              return cacheDelete;
-            },
-            onCompleted: (dynamic resultData) {
-              Navigator.pop(context);
-            },
+            // update: (Cache cacheDelete, QueryResult result) {
+            //   return cacheDelete;
+            // },
+            // onCompleted: (dynamic resultData) {
+            //   Navigator.pop(context);
+            // },
           );
         },
-        update: (Cache, cacheUpdate, QueryResult result) {
-          return cacheUpdate;
-        },
-        onCompleted: (dynamic resultData) {
-          Navigator.pop(context);
-        },
+        // update: (Cache, cacheUpdate, QueryResult result) {
+        //   return cacheUpdate;
+        // },
+        // onCompleted: (dynamic resultData) {
+        //   Navigator.pop(context);
+        // },
       ),
     );
   }
