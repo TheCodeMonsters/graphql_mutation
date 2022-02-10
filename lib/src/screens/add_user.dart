@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_mutation/src/screens/user.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'dart:math' as math;
 
 class AddUser extends StatefulWidget {
-  const AddUser({Key? key}) : super(key: key);
+  AddUser({Key? key}) : super(key: key);
 
   @override
   State<AddUser> createState() => _AddUserState();
@@ -14,6 +13,18 @@ class _AddUserState extends State<AddUser> {
   final _nameController = TextEditingController();
   final _emailController = TextEditingController();
 
+  String mutationAdd = '''
+      mutation Insert_user(\$email:String!,\$id:Int!,\$name:String!) {
+        insert_User(objects:
+          {email: \$email, 
+            id: \$id, 
+            name: \$name}) {
+          affected_rows
+        }
+      }
+    '''
+      .replaceAll('\n', '');
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,9 +32,7 @@ class _AddUserState extends State<AddUser> {
         title: const Text('Add User'),
       ),
       body: Mutation(
-        options: MutationOptions(
-          document: gql(User.mutation),
-        ),
+        options: MutationOptions(document: gql(mutationAdd)),
         builder: (RunMutation runMutation, QueryResult? result) {
           return Center(
             child: Column(
@@ -55,9 +64,7 @@ class _AddUserState extends State<AddUser> {
             ),
           );
         },
-        // update: (Cache cache, QueryResult result) {
-        //   return cache;
-        // },
+
         // onCompleted: (dynamic resultdata) {
         //   Navigator.pop(context);
         // },

@@ -27,14 +27,15 @@ class User {
     } 
   ''';
 
-  static String mutation = '''
-    mutation Insert_user(\$email:String!,\$id:Int!,\$name:String!) {
-      insert_User(objects:
-        {email: \$email, 
-          id: \$id, 
-          name: \$name}) {
-        affected_rows
-      } 
-    '''
+  static String mutationAdd = '''
+          mutation Insert_user(\$email:String!,\$id:Int!,\$name:String!) {
+            insert_User(objects:
+              {email: \$email, 
+                id: \$id, 
+                name: \$name}) {
+              affected_rows
+            }
+        }
+          '''
       .replaceAll('\n', '');
 }

@@ -83,8 +83,8 @@ class _UpdateUserState extends State<UpdateUser> {
                 ),
               );
             },
-            // update: (Cache cacheDelete, QueryResult result) {
-            //   return cacheDelete;
+            // update: (GraphqlCache cache, QueryResult result) {
+            //   return cache;
             // },
             // onCompleted: (dynamic resultData) {
             //   Navigator.pop(context);

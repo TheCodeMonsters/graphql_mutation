@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
       child: const MaterialApp(
         debugShowCheckedModeBanner: false,
         home: HomePage(
-          title: 'Graphql Mutations',
+          title: 'GraphQL Mutations',
         ),
       ),
     );
