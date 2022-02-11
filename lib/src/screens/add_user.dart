@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'dart:math' as math;
@@ -32,42 +34,50 @@ class _AddUserState extends State<AddUser> {
         title: const Text('Add User'),
       ),
       body: Mutation(
-        options: MutationOptions(document: gql(mutationAdd)),
+        options: MutationOptions(
+          document: gql(mutationAdd),
+          update: (cache, QueryResult? result) {
+            return cache;
+          },
+          // onCompleted: (dynamic resultData) {
+          //   Navigator.pop(context);
+          //   print(resultData);
+          // },
+        ),
         builder: (RunMutation runMutation, QueryResult? result) {
-          return Center(
-            child: Column(
-              children: <Widget>[
-                const Padding(padding: EdgeInsets.all(15)),
-                TextField(
-                  decoration: const InputDecoration(helperText: "Enter name"),
-                  controller: _nameController,
+          return Column(
+            children: <Widget>[
+              const Padding(padding: EdgeInsets.all(15)),
+              TextField(
+                decoration: const InputDecoration(helperText: "Enter name"),
+                controller: _nameController,
+              ),
+              const Padding(padding: EdgeInsets.all(15)),
+              TextField(
+                decoration: const InputDecoration(helperText: "Enter email"),
+                controller: _emailController,
+              ),
+              const Padding(padding: EdgeInsets.all(15)),
+              MaterialButton(
+                child: const Text(
+                  "Add User",
+                  style: TextStyle(color: Colors.white),
                 ),
-                const Padding(padding: EdgeInsets.all(15)),
-                TextField(
-                  decoration: const InputDecoration(helperText: "Enter email"),
-                  controller: _emailController,
-                ),
-                const Padding(padding: EdgeInsets.all(15)),
-                MaterialButton(
-                  child: const Text(
-                    "Add User",
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  color: Colors.blue,
-                  onPressed: () => runMutation({
-                    'email': _emailController.text,
-                    'id': math.Random().nextInt(100),
-                    'name': _nameController.text
-                  }),
-                )
-              ],
-            ),
+                color: Colors.blue,
+                onPressed: () {
+                  runMutation(
+                    {
+                      'email': _emailController.text,
+                      'id': math.Random().nextInt(100),
+                      'name': _nameController.text
+                    },
+                  );
+                  Navigator.of(context).pop();
+                },
+              )
+            ],
           );
         },
-
-        // onCompleted: (dynamic resultdata) {
-        //   Navigator.pop(context);
-        // },
       ),
     );
   }

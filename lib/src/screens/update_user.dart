@@ -28,75 +28,79 @@ class _UpdateUserState extends State<UpdateUser> {
       body: Mutation(
         options: MutationOptions(
           document: gql(User.mutationUpdate),
+          update: (cacheUpdate, QueryResult? result) {
+            return cacheUpdate;
+          },
+          onCompleted: (dynamic resultData) {
+            Navigator.pop(context);
+            print(resultData);
+          },
         ),
         builder: (RunMutation runMutationUpdate, QueryResult? resultUpdate) {
-          return Mutation(
-            options: MutationOptions(
-              document: gql(User.mutationDelete),
+          return Center(
+            child: Mutation(
+              options: MutationOptions(
+                document: gql(User.mutationDelete),
+                update: (cache, QueryResult? result) {
+                  return cache;
+                },
+                onCompleted: (dynamic resultData) {
+                  Navigator.pop(context);
+                  print(resultData);
+                },
+              ),
+              builder:
+                  (RunMutation runMutationDelete, QueryResult? resultDelete) {
+                return Center(
+                  child: Column(
+                    children: <Widget>[
+                      TextField(
+                        decoration: InputDecoration(
+                          helperText: "Update Name",
+                          hintText: widget.name,
+                        ),
+                        controller: _nameController,
+                      ),
+                      TextField(
+                        decoration: InputDecoration(
+                          helperText: "Update Email",
+                          hintText: widget.email,
+                        ),
+                        controller: _emailController,
+                      ),
+                      const Padding(
+                        padding: EdgeInsets.all(15),
+                      ),
+                      MaterialButton(
+                        color: Colors.blue,
+                        onPressed: () => runMutationUpdate({
+                          'id': widget.id,
+                          'name': _nameController.text,
+                          'email': _emailController.text
+                        }),
+                        child: const Text(
+                          "Update",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
+                      const Padding(
+                        padding: EdgeInsets.all(15),
+                      ),
+                      MaterialButton(
+                        color: Colors.red,
+                        onPressed: () => runMutationDelete({'id': widget.id}),
+                        child: const Text(
+                          "Delete",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      )
+                    ],
+                  ),
+                );
+              },
             ),
-            builder:
-                (RunMutation runMutationDelete, QueryResult? resultDelete) {
-              return Center(
-                child: Column(
-                  children: <Widget>[
-                    TextField(
-                      decoration: InputDecoration(
-                        helperText: "Update Name",
-                        hintText: widget.name,
-                      ),
-                      controller: _nameController,
-                    ),
-                    TextField(
-                      decoration: InputDecoration(
-                        helperText: "Update Email",
-                        hintText: widget.email,
-                      ),
-                      controller: _emailController,
-                    ),
-                    const Padding(
-                      padding: EdgeInsets.all(15),
-                    ),
-                    MaterialButton(
-                      color: Colors.blue,
-                      onPressed: () => runMutationUpdate({
-                        'id': widget.id,
-                        'name': _nameController.text,
-                        'email': _emailController.text
-                      }),
-                      child: const Text(
-                        "Update",
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    ),
-                    const Padding(
-                      padding: EdgeInsets.all(15),
-                    ),
-                    MaterialButton(
-                      color: Colors.red,
-                      onPressed: () => runMutationDelete({'id': widget.id}),
-                      child: const Text(
-                        "Delete",
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    )
-                  ],
-                ),
-              );
-            },
-            // update: (GraphqlCache cache, QueryResult result) {
-            //   return cache;
-            // },
-            // onCompleted: (dynamic resultData) {
-            //   Navigator.pop(context);
-            // },
           );
         },
-        // update: (Cache, cacheUpdate, QueryResult result) {
-        //   return cacheUpdate;
-        // },
-        // onCompleted: (dynamic resultData) {
-        //   Navigator.pop(context);
-        // },
       ),
     );
   }

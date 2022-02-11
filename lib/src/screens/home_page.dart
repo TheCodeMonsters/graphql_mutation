@@ -36,18 +36,28 @@ class _HomePageState extends State<HomePage> {
           return ListView.builder(
             itemCount: result.data!['User']?.length,
             itemBuilder: (context, index) {
-              return ListTile(
-                title: Text(result.data!['User'][index]['name']),
-                subtitle: Text(result.data!['User'][index]['email']),
-                onTap: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => UpdateUser(
-                      name: result.data!['User'][index]['name'],
-                      email: result.data!['User'][index]['email'],
-                      id: result.data!['User'][index]['id'],
-                    ),
+              return Card(
+                elevation: 5,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: ListTile(
+                  title: Text(result.data!['User'][index]['name']),
+                  subtitle: Text(
+                    result.data!['User'][index]['email'],
                   ),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => UpdateUser(
+                          name: result.data!['User'][index]['name'],
+                          email: result.data!['User'][index]['email'],
+                          id: result.data!['User'][index]['id'],
+                        ),
+                      ),
+                    );
+                  },
                 ),
               );
             },
@@ -55,7 +65,7 @@ class _HomePageState extends State<HomePage> {
         },
       ),
       floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.add),
+        child: const Icon(Icons.upgrade_sharp),
         onPressed: () => Navigator.push(
           context,
           MaterialPageRoute(
